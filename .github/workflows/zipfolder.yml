@@ -30,7 +30,7 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: blosm
+          files: blosm/
           draft: false
           prerelease: false
           generate_release_notes: true
