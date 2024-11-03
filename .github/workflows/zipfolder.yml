@@ -1,21 +1,36 @@
-name: Create Release
+name: Create Release with Code
+
 on:
   push:
     tags:
       - 'v*'  # Trigger on version tags
+  workflow_dispatch:
 
 jobs:
-  release:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-        
+
+      - name: Create release directory
+        run: |
+          # Create a temporary directory for the files
+          mkdir blosm
+          
+          # Copy all files except .git directories
+          # Using rsync to exclude .git directories and preserve structure
+          rsync -av \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.gitignore' \
+            ./ blosm/
+          
       - name: Create Release
+        id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          # Optional configurations:
-          name: 'blosm'
-          generate_release_notes: true  # Automatically generate release notes
-          # draft: true                 # Create as draft release
-          # prerelease: true           # Mark as prerelease
+          files: blosm
+          draft: false
+          prerelease: false
+          generate_release_notes: true
