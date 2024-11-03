@@ -2,7 +2,7 @@ name: Create Release
 on:
   push:
     tags:
-      - 'blosm'  # Trigger on version tags
+      - 'v*'  # Trigger on version tags
 
 jobs:
   release:
@@ -15,6 +15,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           # Optional configurations:
+          name: 'blosm'
           generate_release_notes: true  # Automatically generate release notes
           # draft: true                 # Create as draft release
           # prerelease: true           # Mark as prerelease
