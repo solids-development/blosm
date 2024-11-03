@@ -1,32 +1,20 @@
-name: ZIP addon code
+name: Create Release
 on:
-  # Trigger on push to any branch
   push:
-    branches:
-      - '**'
-  # Optional: Also trigger manually
-  workflow_dispatch:
+    tags:
+      - 'v*'  # Trigger on version tags
 
 jobs:
-  archive:
+  release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          fetch-depth: 0  # Fetch all history for complete archive
-          
-      - name: Create ZIP archive
-        run: |
-          zip -r blosm.zip ./* \
-          --exclude '.git/*' \
-          --exclude '.github/*'
-          
-      - name: Upload ZIP as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: blosm  # Fixed name for the artifact
-          path: blosm.zip
-          retention-days: 90
-          if-no-files-found: error
-          overwrite: true  # This will overwrite any existing artifact with the same name
+          # Optional configurations:
+          generate_release_notes: true  # Automatically generate release notes
+          # draft: true                 # Create as draft release
+          # prerelease: true           # Mark as prerelease
