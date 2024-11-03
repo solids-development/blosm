@@ -25,12 +25,16 @@ jobs:
             --exclude='.github/' \
             --exclude='.gitignore' \
             ./ blosm/
+      
+      - name: Create ZIP archive
+        run: |
+          zip -r blosm.zip blosm/
           
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: blosm/
+          files: blosm.zip
           draft: false
           prerelease: false
           generate_release_notes: true
