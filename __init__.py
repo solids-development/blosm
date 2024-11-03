@@ -84,7 +84,7 @@ class BlosmPreferences(bpy.types.AddonPreferences, ape.AssetPackageEditor):
     )
     
     dataDir: bpy.props.StringProperty(
-        name = '',
+        name = '/tmp',
         subtype = 'DIR_PATH',
         description = "Directory to store downloaded OpenStreetMap and terrain files"
     )
